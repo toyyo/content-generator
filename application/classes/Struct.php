@@ -8,7 +8,7 @@ class Struct extends DB{
     }
     
     public static function isTableExists(){
-        var_dump(DB::instance()->query("SHOW TABLES WHERE ``")); 
+        var_dump(DB::instance()->query("SHOW TABLES WHERE ``"));  
     }
     
     public static function test(){  

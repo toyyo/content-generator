@@ -57,7 +57,7 @@ class DB {
     public static function instance(){
         // see connect() 
         if ( ! isset(DB::$_instance)){ 
-            die('Ошибка: сначала нужно вызвать DB::connect()');    
+            die('Ошибка: сначала нужно вызвать DB::connect()');   // м.б. только на этапе разработки 
         } 
         return DB::$_instance;  
     }

@@ -1,5 +1,5 @@
 body{
-	overflow-y:scroll;
+    overflow-y:scroll;
 }
 #header{
     width:100%;
@@ -7,36 +7,39 @@ body{
     background-color: #133783;
 }
 #main{
-	padding:20px 60px;
-	min-width: 600px;
+    padding:20px 60px;
+    min-width: 600px;
 }
 #left{
-	width:240px; 
-	height:500px;
-	float:left;
-	overflow: hidden;
-	border-right: 1px solid grey;
+    width:240px; 
+    height:500px;
+    float:left;
+    overflow: hidden;
+    border-right: 1px solid grey;
 }
 #center{ 
-	padding-left: 270px;
+    padding-left: 270px;
 }
 #right{
-	float:right;
+    float:right;
+}
+#form_gen_records{
+ margin-top:10px;   
 }
 h1.logo{
-	color:white;
-	padding:20px 30px;
+    color:white;
+    padding:20px 30px;
 }
 .desc{
-	color:grey;
-	margin-left: 10px;
+    color:grey;
+    margin-left: 10px;
 }
 table{     
-	width:90%;
-	margin-top:20px;
-	border-collapse: collapse; 
+    width:90%;
+    margin-top:20px;
+    border-collapse: collapse; 
 } 
 td, th {
-	padding: 4px 20px; 
-	border: 1px solid maroon; 
+    padding: 4px 20px; 
+    border: 1px solid maroon; 
 }

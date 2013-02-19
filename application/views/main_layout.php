@@ -10,7 +10,8 @@
     
 <body> 
     <div id="header">
-        <h1 class="logo">Генерация тестовых данных.</h1>  
+        <h1 class="logo">Генерация тестовых данных.</h1>
+        <?php echo View::factory('menu/main');?>
     </div>
     <div id="main">
         <?php echo $body; ?> 

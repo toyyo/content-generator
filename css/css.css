@@ -24,11 +24,19 @@ body{
     float:right;
 }
 #form_gen_records{
- margin-top:10px;   
+    margin-top:10px;
 }
 h1.logo{
     color:white;
-    padding:20px 30px;
+    padding:5px 30px;
+}
+#main_menu li{
+    list-style: none;
+    float:left;
+    padding-left:15px;
+}
+#main_menu li a{
+    color:white;
 }
 .desc{
     color:grey;
@@ -42,4 +50,16 @@ table{
 td, th {
     padding: 4px 20px; 
     border: 1px solid maroon; 
+}
+.msg{
+    border: 1px solid green;
+    border-radius: 5px;
+    padding: 2px 15px;
+    margin:10px 0;
+    width:90%;
+    background-color: #32cd32;
+    color:white;
+}
+.msg .error{
+    color:red;
 }

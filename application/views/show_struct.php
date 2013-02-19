@@ -1,23 +1,34 @@
 <div id="left">
-    <h2>Все таблицы</h2> 
-    <?php if (isset($aTableNames) && is_array($aTableNames)): ?> 
-    
-        <?php if (count($aTableNames)): ?>
+    <h2>БД '<?php echo Arr::get($_SESSION['db_connect'], 'dbname');?>'</h2>
+    <?php if (isset($aTables) && is_array($aTables)): ?>
+
+        <?php if (count($aTables)): ?>
             <ul>
-                <?php foreach ($aTableNames as $oRow): ?>  
+                <?php foreach ($aTables as $table): ?>
                     <li> 
-                        <a href="<?php echo URL_ROOT . '?q=show_struct&table='.$oRow->Tables_in_gen;?>"><?php echo $oRow->Tables_in_gen;?></a>     
+                        <a href="<?php echo URL_ROOT . '?q=show_struct&table='.$table;?>"><?php echo $table;?></a>
                     </li> 
                 <?php endforeach; ?>  
             </ul>    
         <?php else: ?>
-            <p>в БД нету не одной таблицы</p> 
+            <p>в выбранной БД нету не одной таблицы</p>
         <?php endif; ?>
 
     <?php endif; ?>
 </div>   
 <div id="center">
+
+    <?php if (isset($aInsertedData)): ?>
+        <p>Успешно вставлено <?php echo count($aInsertedData);?> строк:</p>
+        <?php foreach ($aInsertedData as $row): ?>
+            <div>
+                <?php echo $row; ?>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
     <!-- структура таблицы -->
+    <?php echo Messages::view(); ?>
     <?php if (isset($aColumns) && ($aColumns)): ?> 
         <h2>Структура таблицы <?php echo $tableName;?>:</h2>   
         <table> 
@@ -26,9 +37,11 @@
                     <th id="th2">#</th>
                     <th id="th3" class="column">Поле</th>
                     <th id="th4" class="type">Тип</th>
-                    <th id="th5" class="collation">Сравнение</th>
+                    <th id="th5" class="type">Ключ</th>
+                    <th id="th6" class="collation">Сравнение</th>
                     <th id="th7" class="null">Null</th>
                     <th id="th8" class="default">По умолчанию</th>
+                    <th id="th9" class="extra">Дополнительно</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,15 +50,19 @@
                     <?php //var_dump($oColumn);?>
                     <td><?php echo $i+1;?></td>   
                     <td><?php echo $oColumn->Field; ?></td> 
-                    <td><?php echo $oColumn->Type; ?></td> 
+                    <td><?php echo $oColumn->Type; ?></td>
+                    <td><?php echo $oColumn->Key; ?></td>
                     <td><?php //echo $oColumn->Null; ?></td>  
                     <td><?php echo $oColumn->Null; ?></td> 
-                    <td><?php echo $oColumn->Default; ?></td> 
+                    <td><?php echo $oColumn->Default; ?></td>
+                    <td><?php echo $oColumn->Extra; ?></td>
                 </tr>
             <?php endforeach; ?>   
             </tbody>
-        </table>  
-    <?php elseif (isset($aColumns)): ?>   
+        </table>
+    <?php elseif (!isset($_GET['table'])): ?>
+        <p>Выберите таблицу.</p>
+    <?php else: ?>
         <p>Таблица не найдена.</p>
     <?php endif; ?>
     <!-- /структура таблицы -->
@@ -93,7 +110,7 @@
     <?php if (isset($aColumns) && ($aColumns)): ?> 
     <form id="form_gen_records" action method="post">  
         Сколько записей будем генерить?
-        <input type="text" name="count_generate" size="5" maxlength="5" />   
+        <input type="text" name="count_generate" size="5" maxlength="5" placeholder="число" />
         <input type="submit" value="сгенерить" onClick="return confirm('Сгенерить '+parseInt(this.form.count_generate.value)+' записей?');" /> 
     </form>
     <?php endif; ?>

@@ -1,67 +1,47 @@
-<?php 
+<?php
 
-class Struct extends DB{
+/**
+ * Класс для работы с таблицами, индексами
+ * @use DB
+ */
+class Struct {
     
     public static function getTables(){ 
-        $dbres = DB::instance()->query("SHOW TABLES");  
-        return self::getRows($dbres); 
+        $dbres = DB::getAll("SHOW TABLES");
+        $property = 'Tables_in_' . DB::getDatabaseName();
+        $aTables = array();
+        foreach ($dbres as $oRow){
+            $aTables[] = $oRow->$property;
+        }
+        return $aTables;
     }
-    
-    public static function isTableExists(){
-        var_dump(DB::instance()->query("SHOW TABLES WHERE ``"));  
-    }
-    
-    public static function test(){  
-        $result = DB::instance()->query("SELECT * FROM test1 ");
-        
-        if($result){ 
-            // Cycle through results
-            while ($row = $result->fetch_object()){
-                $user_arr[] = $row;
-            }
-             
-//             // Free result set
-//             $result->close();
-//             DB::instance()->next_result();
-        } 
-//         var_dump($user_arr[0]->name);  
-        return $user_arr;
-        
-//         var_dump($res);
-//         return DB::instance()->query('SHOW TABLES');
-//         $result = DB::instance()->query('SELECT * FROM test1');  
-//         if($result){
-//             // Cycle through results
-//             while ($row = $result->fetch_object()){
-//                 $user_arr[] = $row;
-//             }
-//             // Free result set
-//             $result->close();
-//             DB::instance()->next_result();
-//         }
-//         return $user_arr;
-    }
-    
+
+    /**
+     * Return array:
+     * ключ массива - имя индексного поля
+     * значение - объект индекса
+     *
+     * @param string $tableName
+     * @return array
+     */
     public static function getTableIndexes($tableName){
-        $dbres = DB::instance()->query('SHOW INDEX FROM '.$tableName);
-        return self::getRows($dbres);
-    }
-    
-    public static function getTableColumns($tableName){
-        $dbres = DB::instance()->query('SHOW COLUMNS FROM '.$tableName);
-        return self::getRows($dbres);
-    }
-    
-    public static function getRows($mysqli_result){ 
-        $aRes = array(); 
+        $mysqli_result = DB::instance()->query('SHOW INDEX FROM '.$tableName);
+        $aIndexes = array();
         if($mysqli_result){
             // Cycle through results
-            while ($row = $mysqli_result->fetch_object()){
-                $aRes[] = $row;
+            while ($oRow = $mysqli_result->fetch_object()){
+                $aIndexes[$oRow->Column_name] = $oRow;
             }
         }
-        return $aRes; 
+        return $aIndexes;
     }
-    
-    
-} 
+
+    /**
+     * @param string $tableName
+     * @return array
+     */
+    public static function getTableColumns($tableName){
+        return DB::getAll('SHOW COLUMNS FROM '.$tableName);
+    }
+
+}
